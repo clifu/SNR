@@ -15,13 +15,12 @@ learning_rate = 0.0001
 epochs = 100
 preprocess_function = preprocess_input
 
-current_dir = os.getcwd() + r"\SNR\stanford_car_dataset_by_classes"
-train_dir = current_dir + r"\train"
-test_dir = current_dir + r"\test"
+current_dir = os.getcwd() + r"/stanford_car_dataset_by_classes"
+train_dir = current_dir + r"/train"
+test_dir = current_dir + r"/test"
 
 
 def draw_training_info(_history):
-
     acc = _history.history['accuracy']
     val_acc = _history.history['val_accuracy']
     loss = _history.history['loss']
@@ -87,7 +86,7 @@ def get_preapared_vgg16_model(_input_shape, _num_classes):
 
 train_datagen = ImageDataGenerator(
     preprocessing_function=preprocess_function,
-    rescale=1./255,
+    rescale=1. / 255,
     rotation_range=40,
     width_shift_range=0.2,
     height_shift_range=0.2,
@@ -108,7 +107,7 @@ test_datagen = ImageDataGenerator(
     preprocessing_function=preprocess_function,
     rescale=1. / 255)
 test_generator = test_datagen.flow_from_directory(
-    train_dir,
+    test_dir,
     target_size=target_size,
     batch_size=batch_size,
     class_mode='categorical'
