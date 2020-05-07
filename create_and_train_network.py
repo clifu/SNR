@@ -12,12 +12,12 @@ input_shape = (256, 256, 3)
 target_size = (256, 256)
 batch_size = 32
 learning_rate = 0.0001
-epochs = 100
+epochs = 50
 preprocess_function = preprocess_input
 
-current_dir = os.getcwd() + r"/stanford_car_dataset_by_classes"
-train_dir = current_dir + r"/train"
-test_dir = current_dir + r"/test"
+current_dir = os.getcwd() + r"\SNR\stanford_car_dataset_by_classes"
+train_dir = current_dir + r"\train"
+test_dir = current_dir + r"\test"
 
 
 def draw_training_info(_history):
