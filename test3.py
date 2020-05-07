@@ -10,83 +10,88 @@ import os
 import numpy as np
 import json
 from IPython.display import display
-from sklearn.svm import SVC
+from sklearn import svm
 from keras.applications.vgg16 import preprocess_input
 from keras.preprocessing.image import ImageDataGenerator
 from sklearn import metrics
+from sklearn.metrics import classification_report, accuracy_score
+import operator
+from sklearn.model_selection import train_test_split
+import pandas as pd
 
-CLASS_INDEX = None
-CLASS_INDEX_PATH = 'C:/Users/Clifu/Desktop/SNR/classes_index.json'
+batch_size = 256
+target_size = (256, 256)
 
-
-def my_decode_predictions(preds, top=1):
-    global CLASS_INDEX
-
-    if CLASS_INDEX is None:
-        with open(CLASS_INDEX_PATH) as f:
-            CLASS_INDEX = json.load(f)
-    results = []
-    for pred in preds:
-        top_indices = pred.argsort()[-top:][::-1]
-        result = [tuple(CLASS_INDEX[str(i)]) + (pred[i],) for i in top_indices]
-        result.sort(key=lambda x: x[2], reverse=True)
-        results.append(result)
-    return results
-
-
-def find_classes(dir):
-    classes = os.listdir(dir)
-    classes.sort()
-    class_to_idx = {classes[i]: i for i in range(len(classes))}
-    return classes, class_to_idx
-
-
-batch_size = 128
-
-model = load_model('C:/Users/Clifu/Desktop/SNR/fine_tune_vgg16.h5')
+model = load_model('C:/Users/Clifu/Desktop/SNR/SNR/learned_vgg16.h5')
 config = model.get_config()
 weights = model.get_weights()
 
-model_feat = Model(inputs=model.input,
-                   outputs=model.get_layer('dense_1').output)
-
 preprocess_function = preprocess_input
-target_size = (256, 256)
-batch_size = 128
-datapath = os.path.abspath(
-    "../SNR/stanford-car-dataset-by-classes-folder")
-validation_dir = datapath + '\\car_data\\car_data\\test'
+current_dir = os.getcwd() + r"\SNR\stanford_car_dataset_by_classes"
+train_dir = current_dir + r"\train"
+test_dir = current_dir + r"\test"
 
-validation_datagen = ImageDataGenerator(
-    preprocessing_function=preprocess_function, rescale=1. / 255)
-validation_generator = validation_datagen.flow_from_directory(
-    validation_dir,
+train_datagen = ImageDataGenerator(
+    preprocessing_function=preprocess_function,
+    rescale=1. / 255,
+    rotation_range=40,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    shear_range=0.2,
+    zoom_range=0.2,
+    horizontal_flip=True,
+    fill_mode='nearest'
+)
+train_generator = train_datagen.flow_from_directory(
+    train_dir,
     target_size=target_size,
     batch_size=batch_size,
     class_mode='categorical'
 )
 
-names = ['C:/Users/Clifu/Desktop/SNR/00019.jpg',
-         'C:/Users/Clifu/Desktop/SNR/00128.jpg']
-dataset_dir = os.path.abspath(
-    '../SNR/stanford-car-dataset-by-classes-folder/car_data/car_data/test')
-classes, classes_idx = find_classes(dataset_dir)
+test_datagen = ImageDataGenerator(
+    preprocessing_function=preprocess_function,
+    rescale=1. / 255)
+test_generator = test_datagen.flow_from_directory(
+    test_dir,
+    target_size=target_size,
+    batch_size=batch_size,
+    class_mode='categorical'
+)
 
-for i in range(0, 100):
-    # # load an image from file
-    # image = load_img(n, target_size=(256, 256))
-    # # convert the image pixels to a numpy array
-    # image = img_to_array(image)
-    # # reshape data for the model
-    # image = image.reshape((1, image.shape[0], image.shape[1], image.shape[2]))
-    # # prepare the image for the VGG model
-    # image = preprocess_input(image)
-    # # predict the probability across all output classes
-    #yhat = model.predict_proba(image)
-    x, y = validation_generator.next()
-    pred = model.predict(x)
-    print(np.argmax(pred[0]))
-    feat_train = model_feat.predict(x)
-    svm = SVC(kernel='linear')
-    svm.fit(feat_train, np.argmax(y, axis=1))
-    print(svm.score(feat_train, np.argmax(y, axis=1)))
+x, y = train_generator.next()
+feature = model.predict(x, verbose=1)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    feature, y)
+
+classificators = [
+    svm.SVC(kernel='linear'),
+    svm.SVC(kernel='poly',
+            degree=2),
+    svm.SVC(kernel='rbf')]
+classifactors_names = ['linear', 'quadratic', 'rbf']
+indexxxxxx = 0
+for clf in classificators:
+    print(classifactors_names[indexxxxxx])
+    abc = []
+
+    for a in y_train:
+        index, value = max(enumerate(a), key=operator.itemgetter(1))
+        abc.append(index)
+
+    clf.fit(X_train, abc)
+    y_pred = clf.predict(X_test)
+
+    abc = []
+
+    for a in y_test:
+        index, value = max(enumerate(a), key=operator.itemgetter(1))
+        abc.append(index)
+
+    report = classification_report(abc, y_pred)
+    print(report)
+
+    acc = accuracy_score(abc, y_pred)
+    print('Accuracy for ' + classifactors_names[indexxxxxx] + ' : ' + str(acc))
+    indexxxxxx = indexxxxxx + 1
