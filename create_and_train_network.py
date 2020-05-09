@@ -8,11 +8,11 @@ from keras import models
 from keras.applications import VGG16, Xception, InceptionV3
 from keras.applications.vgg16 import preprocess_input
 
-input_shape = (256, 256, 3)
-target_size = (256, 256)
-batch_size = 32
+input_shape = (224, 224, 3)
+target_size = (224, 224)
+batch_size = 64
 learning_rate = 0.0001
-epochs = 50
+epochs = 70
 preprocess_function = preprocess_input
 
 current_dir = os.getcwd() + r"\SNR\stanford_car_dataset_by_classes"
@@ -70,14 +70,12 @@ def get_preapared_vgg16_model(_input_shape, _num_classes):
     _model.add(_conv_base)
 
     # add a global spatial average pooling layer
-    _model.add(layers.GlobalAveragePooling2D())
+    _model.add(layers.Flatten(name='flatten'))
 
     # let's add a fully-connected layer
     _model.add(layers.Dense(4096, activation='relu'))
     _model.add(layers.Dense(4096, activation='relu'))
-    _model.add(layers.Dense(1000, activation='relu'))
-
-    # and a logistic layer -- let's say we have 200 classes
+    # and a logistic layer
     _model.add(layers.Dense(_num_classes, activation='softmax'))
 
     print_model_info(_conv_base, _model)
@@ -86,7 +84,7 @@ def get_preapared_vgg16_model(_input_shape, _num_classes):
 
 train_datagen = ImageDataGenerator(
     preprocessing_function=preprocess_function,
-    rescale=1. / 255,
+    rescale=1. / 223,
     rotation_range=40,
     width_shift_range=0.2,
     height_shift_range=0.2,
@@ -105,7 +103,7 @@ num_classes = train_generator.num_classes
 
 test_datagen = ImageDataGenerator(
     preprocessing_function=preprocess_function,
-    rescale=1. / 255)
+    rescale=1. / 223)
 test_generator = test_datagen.flow_from_directory(
     test_dir,
     target_size=target_size,

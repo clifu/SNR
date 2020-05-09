@@ -13,18 +13,20 @@ from keras import layers
 from IPython.display import display
 from sklearn import svm
 from keras.applications.vgg16 import preprocess_input
+import keras
 from keras.preprocessing.image import ImageDataGenerator
 from sklearn import metrics
 from sklearn.metrics import classification_report, accuracy_score
 import operator
 from sklearn.model_selection import train_test_split
 import pandas as pd
+from keras.optimizers import Adam
 
-batch_size = 256
-target_size = (256, 256)
+
+batch_size = 32768
+target_size = (224, 224)
 
 model = load_model('C:/Users/Clifu/Desktop/SNR/SNR/learned_vgg16.h5')
-model.save_weights('wagi.h5')
 config = model.get_config()
 weights = model.get_weights()
 model.summary()
@@ -36,7 +38,7 @@ test_dir = current_dir + r"\test"
 
 train_datagen = ImageDataGenerator(
     preprocessing_function=preprocess_function,
-    rescale=1. / 255,
+    rescale=1. / 223,
     rotation_range=40,
     width_shift_range=0.2,
     height_shift_range=0.2,
@@ -54,7 +56,7 @@ train_generator = train_datagen.flow_from_directory(
 
 test_datagen = ImageDataGenerator(
     preprocessing_function=preprocess_function,
-    rescale=1. / 255)
+    rescale=1. / 223)
 test_generator = test_datagen.flow_from_directory(
     test_dir,
     target_size=target_size,
@@ -62,9 +64,17 @@ test_generator = test_datagen.flow_from_directory(
     class_mode='categorical'
 )
 
-x, y = train_generator.next()
-feature = model.predict(x, verbose=1)
+base_model = VGG16(input_shape=(224, 224, 3))
+base_model.load_weights('wagi.h5', by_name=True)
+optimizer = keras.optimizers.RMSprop(lr=0.0001)
+model = Model(inputs=base_model.input,
+              outputs=base_model.get_layer('fc1').output)
+model.compile(loss='categorical_crossentropy',
+              optimizer=optimizer,
+              metrics=['accuracy'])
 
+x, y = train_generator.next()
+feature = model.predict(x, verbose=0)
 X_train, X_test, y_train, y_test = train_test_split(
     feature, y)
 

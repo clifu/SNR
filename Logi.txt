@@ -1,0 +1,255 @@
+CONV_BASE.SUMMARY:
+Model: "vgg16"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #
+=================================================================
+input_1 (InputLayer)         (None, 224, 224, 3)       0
+_________________________________________________________________
+block1_conv1 (Conv2D)        (None, 224, 224, 64)      1792
+_________________________________________________________________
+block1_conv2 (Conv2D)        (None, 224, 224, 64)      36928
+_________________________________________________________________
+block1_pool (MaxPooling2D)   (None, 112, 112, 64)      0
+_________________________________________________________________
+block2_conv1 (Conv2D)        (None, 112, 112, 128)     73856
+_________________________________________________________________
+block2_conv2 (Conv2D)        (None, 112, 112, 128)     147584
+_________________________________________________________________
+block2_pool (MaxPooling2D)   (None, 56, 56, 128)       0
+_________________________________________________________________
+block3_conv1 (Conv2D)        (None, 56, 56, 256)       295168
+_________________________________________________________________
+block3_conv2 (Conv2D)        (None, 56, 56, 256)       590080
+_________________________________________________________________
+block3_conv3 (Conv2D)        (None, 56, 56, 256)       590080
+_________________________________________________________________
+block3_pool (MaxPooling2D)   (None, 28, 28, 256)       0
+_________________________________________________________________
+block4_conv1 (Conv2D)        (None, 28, 28, 512)       1180160
+_________________________________________________________________
+block4_conv2 (Conv2D)        (None, 28, 28, 512)       2359808
+_________________________________________________________________
+block4_conv3 (Conv2D)        (None, 28, 28, 512)       2359808
+_________________________________________________________________
+block4_pool (MaxPooling2D)   (None, 14, 14, 512)       0
+_________________________________________________________________
+block5_conv1 (Conv2D)        (None, 14, 14, 512)       2359808
+_________________________________________________________________
+block5_conv2 (Conv2D)        (None, 14, 14, 512)       2359808
+_________________________________________________________________
+block5_conv3 (Conv2D)        (None, 14, 14, 512)       2359808
+_________________________________________________________________
+block5_pool (MaxPooling2D)   (None, 7, 7, 512)         0
+=================================================================
+Total params: 14,714,688
+Trainable params: 0
+Non-trainable params: 14,714,688
+_________________________________________________________________
+CONV_BASE LAYERS INFO:
+0 ) <keras.engine.input_layer.InputLayer object at 0x000001F206AE3DC8> False        
+1 ) <keras.layers.convolutional.Conv2D object at 0x000001F2066E7488> False
+2 ) <keras.layers.convolutional.Conv2D object at 0x000001F2062D5B08> False
+3 ) <keras.layers.pooling.MaxPooling2D object at 0x000001F206AE6A48> False
+4 ) <keras.layers.convolutional.Conv2D object at 0x000001F206B34A48> False
+5 ) <keras.layers.convolutional.Conv2D object at 0x000001F206B38688> False
+6 ) <keras.layers.pooling.MaxPooling2D object at 0x000001F206ECCA08> False
+7 ) <keras.layers.convolutional.Conv2D object at 0x000001F206ED0D88> False
+8 ) <keras.layers.convolutional.Conv2D object at 0x000001F206ED5FC8> False
+9 ) <keras.layers.convolutional.Conv2D object at 0x000001F206ED7AC8> False
+10 ) <keras.layers.pooling.MaxPooling2D object at 0x000001F206EDE948> False
+11 ) <keras.layers.convolutional.Conv2D object at 0x000001F206EE0C48> False
+12 ) <keras.layers.convolutional.Conv2D object at 0x000001F206EE4C88> False
+13 ) <keras.layers.convolutional.Conv2D object at 0x000001F206EE8E88> False
+14 ) <keras.layers.pooling.MaxPooling2D object at 0x000001F206EEE608> False
+15 ) <keras.layers.convolutional.Conv2D object at 0x000001F206EEEE88> False
+16 ) <keras.layers.convolutional.Conv2D object at 0x000001F206EF5A48> False
+17 ) <keras.layers.convolutional.Conv2D object at 0x000001F206EF7808> False
+18 ) <keras.layers.pooling.MaxPooling2D object at 0x000001F206EFAFC8> False
+MODEL.SUMMARY:
+Model: "sequential_1"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+vgg16 (Model)                (None, 7, 7, 512)         14714688
+_________________________________________________________________
+flatten (Flatten)            (None, 25088)             0
+_________________________________________________________________
+dense_1 (Dense)              (None, 4096)              102764544
+_________________________________________________________________
+dense_2 (Dense)              (None, 4096)              16781312
+_________________________________________________________________
+dense_3 (Dense)              (None, 10)                40970
+=================================================================
+Total params: 134,301,514
+Trainable params: 119,586,826
+Non-trainable params: 14,714,688
+_________________________________________________________________
+Epoch 1/70
+2020-05-09 15:05:52.448399: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cublas64_10.dll
+2020-05-09 15:05:52.647438: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cudnn64_7.dll
+2020-05-09 15:05:53.333009: W tensorflow/stream_executor/gpu/redzone_allocator.cc:312] Internal: Invoking GPU asm compilation is supported on Cuda non-Windows platforms only
+Relying on driver to perform ptx compilation. This message will be only logged once.
+2020-05-09 15:05:53.682285: W tensorflow/core/common_runtime/bfc_allocator.cc:243] Allocator (GPU_0_bfc) ran out of memory trying to allocate 3.54GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could 
+be performance gains if more memory were available.
+2020-05-09 15:05:53.795740: W tensorflow/core/common_runtime/bfc_allocator.cc:243] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.60GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could 
+be performance gains if more memory were available.
+2020-05-09 15:05:54.237701: W tensorflow/core/common_runtime/bfc_allocator.cc:243] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.60GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could 
+be performance gains if more memory were available.
+2020-05-09 15:05:54.244917: W tensorflow/core/common_runtime/bfc_allocator.cc:243] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.81GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could 
+be performance gains if more memory were available.
+1/6 [====>.........................] - ETA: 20s - loss: 2.4331 - accuracy: 0.02082020-05-09 15:05:55.844158: W tensorflow/core/common_runtime/bfc_allocator.cc:243] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.03GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be 
+performance gains if more memory were available.
+2020-05-09 15:05:55.915312: W tensorflow/core/common_runtime/bfc_allocator.cc:243] Allocator (GPU_0_bfc) ran out of memory trying to allocate 1.82GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could 
+be performance gains if more memory were available.
+2020-05-09 15:05:55.924025: W tensorflow/core/common_runtime/bfc_allocator.cc:243] Allocator (GPU_0_bfc) ran out of memory trying to allocate 800.00MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2020-05-09 15:05:55.939319: W tensorflow/core/kernels/gpu_utils.cc:48] Failed to al 
+ocate memory for convolution redzone checking; skipping this check. This is benign and only means that we won't check cudnn for out-of-bounds reads and writes. This message will only be printed once.
+2020-05-09 15:05:56.328256: W tensorflow/core/common_runtime/bfc_allocator.cc:243] Allocator (GPU_0_bfc) ran out of memory trying to allocate 3.46GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could 
+be performance gains if more memory were available.
+2020-05-09 15:05:56.943453: W tensorflow/core/common_runtime/bfc_allocator.cc:243] Allocator (GPU_0_bfc) ran out of memory trying to allocate 3.46GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could 
+be performance gains if more memory were available.
+2020-05-09 15:05:56.975109: W tensorflow/core/common_runtime/bfc_allocator.cc:243] Allocator (GPU_0_bfc) ran out of memory trying to allocate 3.06GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could 
+be performance gains if more memory were available.
+6/6 [==============================] - 11s 2s/step - loss: 7.7288 - accuracy: 0.0978 - val_loss: 3.3380 - val_accuracy: 0.1172
+Epoch 2/70
+6/6 [==============================] - 8s 1s/step - loss: 2.5125 - accuracy: 0.1277 
+- val_loss: 2.0340 - val_accuracy: 0.2222
+Epoch 3/70
+6/6 [==============================] - 6s 1s/step - loss: 2.0732 - accuracy: 0.2552 
+- val_loss: 2.3436 - val_accuracy: 0.1167
+Epoch 4/70
+6/6 [==============================] - 6s 929ms/step - loss: 2.1946 - accuracy: 0.2528 - val_loss: 2.0610 - val_accuracy: 0.2833
+Epoch 5/70
+6/6 [==============================] - 5s 851ms/step - loss: 2.0555 - accuracy: 0.3098 - val_loss: 2.2493 - val_accuracy: 0.3361
+Epoch 6/70
+6/6 [==============================] - 5s 854ms/step - loss: 2.2150 - accuracy: 0.2734 - val_loss: 1.8540 - val_accuracy: 0.3694
+Epoch 7/70
+6/6 [==============================] - 5s 757ms/step - loss: 1.8970 - accuracy: 0.3342 - val_loss: 1.7046 - val_accuracy: 0.4444
+Epoch 8/70
+6/6 [==============================] - 5s 793ms/step - loss: 1.7283 - accuracy: 0.4293 - val_loss: 1.8008 - val_accuracy: 0.3073
+Epoch 9/70
+6/6 [==============================] - 6s 940ms/step - loss: 1.8006 - accuracy: 0.3967 - val_loss: 2.0060 - val_accuracy: 0.3111
+Epoch 10/70
+6/6 [==============================] - 6s 978ms/step - loss: 1.6035 - accuracy: 0.4479 - val_loss: 1.8089 - val_accuracy: 0.4583
+Epoch 11/70
+6/6 [==============================] - 5s 906ms/step - loss: 1.6952 - accuracy: 0.4457 - val_loss: 1.9160 - val_accuracy: 0.3583
+Epoch 12/70
+6/6 [==============================] - 5s 853ms/step - loss: 1.7043 - accuracy: 0.4212 - val_loss: 1.7031 - val_accuracy: 0.4639
+Epoch 13/70
+6/6 [==============================] - 5s 823ms/step - loss: 1.5114 - accuracy: 0.5136 - val_loss: 1.4105 - val_accuracy: 0.4556
+Epoch 14/70
+6/6 [==============================] - 5s 756ms/step - loss: 1.3586 - accuracy: 0.5489 - val_loss: 1.5332 - val_accuracy: 0.4583
+Epoch 15/70
+6/6 [==============================] - 5s 775ms/step - loss: 1.4857 - accuracy: 0.5299 - val_loss: 1.5547 - val_accuracy: 0.4141
+Epoch 16/70
+6/6 [==============================] - 6s 950ms/step - loss: 1.3179 - accuracy: 0.5516 - val_loss: 1.8701 - val_accuracy: 0.4083
+Epoch 17/70
+6/6 [==============================] - 5s 915ms/step - loss: 1.4044 - accuracy: 0.5109 - val_loss: 1.0873 - val_accuracy: 0.5917
+Epoch 18/70
+6/6 [==============================] - 5s 898ms/step - loss: 1.2727 - accuracy: 0.5990 - val_loss: 1.2567 - val_accuracy: 0.5778
+Epoch 19/70
+6/6 [==============================] - 5s 837ms/step - loss: 1.2168 - accuracy: 0.6168 - val_loss: 1.8465 - val_accuracy: 0.4778
+Epoch 20/70
+6/6 [==============================] - 5s 777ms/step - loss: 1.1735 - accuracy: 0.5852 - val_loss: 1.4608 - val_accuracy: 0.5611
+Epoch 21/70
+6/6 [==============================] - 5s 800ms/step - loss: 1.2136 - accuracy: 0.6068 - val_loss: 1.5532 - val_accuracy: 0.5389
+Epoch 22/70
+6/6 [==============================] - 5s 804ms/step - loss: 1.0578 - accuracy: 0.6685 - val_loss: 1.0165 - val_accuracy: 0.6771
+Epoch 23/70
+6/6 [==============================] - 6s 969ms/step - loss: 0.9575 - accuracy: 0.6712 - val_loss: 1.4965 - val_accuracy: 0.4667
+Epoch 24/70
+6/6 [==============================] - 6s 950ms/step - loss: 1.0013 - accuracy: 0.6953 - val_loss: 1.5509 - val_accuracy: 0.4806
+Epoch 25/70
+6/6 [==============================] - 5s 871ms/step - loss: 1.2900 - accuracy: 0.5625 - val_loss: 1.8248 - val_accuracy: 0.5222
+Epoch 26/70
+6/6 [==============================] - 5s 870ms/step - loss: 0.8973 - accuracy: 0.6797 - val_loss: 1.3422 - val_accuracy: 0.6056
+Epoch 27/70
+6/6 [==============================] - 5s 836ms/step - loss: 0.7642 - accuracy: 0.7582 - val_loss: 1.6093 - val_accuracy: 0.5778
+Epoch 28/70
+6/6 [==============================] - 5s 771ms/step - loss: 1.0646 - accuracy: 0.6685 - val_loss: 1.2830 - val_accuracy: 0.5167
+Epoch 29/70
+6/6 [==============================] - 5s 793ms/step - loss: 0.7301 - accuracy: 0.7636 - val_loss: 2.0462 - val_accuracy: 0.5312
+Epoch 30/70
+6/6 [==============================] - 6s 945ms/step - loss: 0.9154 - accuracy: 0.7065 - val_loss: 1.1778 - val_accuracy: 0.6278
+Epoch 31/70
+6/6 [==============================] - 6s 937ms/step - loss: 1.0600 - accuracy: 0.6957 - val_loss: 1.0536 - val_accuracy: 0.5944
+Epoch 32/70
+6/6 [==============================] - 6s 932ms/step - loss: 0.7350 - accuracy: 0.7682 - val_loss: 1.2369 - val_accuracy: 0.6028
+Epoch 33/70
+6/6 [==============================] - 5s 813ms/step - loss: 0.7621 - accuracy: 0.7869 - val_loss: 1.6685 - val_accuracy: 0.4944
+Epoch 34/70
+6/6 [==============================] - 5s 826ms/step - loss: 0.6034 - accuracy: 0.8021 - val_loss: 0.7107 - val_accuracy: 0.6833
+Epoch 35/70
+6/6 [==============================] - 5s 756ms/step - loss: 1.0288 - accuracy: 0.7228 - val_loss: 1.1510 - val_accuracy: 0.5528
+Epoch 36/70
+6/6 [==============================] - 5s 774ms/step - loss: 0.8188 - accuracy: 0.7228 - val_loss: 1.5495 - val_accuracy: 0.5599
+Epoch 37/70
+6/6 [==============================] - 6s 976ms/step - loss: 0.5499 - accuracy: 0.8151 - val_loss: 1.9095 - val_accuracy: 0.5361
+Epoch 38/70
+6/6 [==============================] - 5s 912ms/step - loss: 0.8016 - accuracy: 0.7670 - val_loss: 0.6794 - val_accuracy: 0.6611
+Epoch 39/70
+6/6 [==============================] - 5s 908ms/step - loss: 0.4980 - accuracy: 0.8568 - val_loss: 1.6874 - val_accuracy: 0.6222
+Epoch 40/70
+6/6 [==============================] - 5s 875ms/step - loss: 0.6368 - accuracy: 0.7853 - val_loss: 1.5308 - val_accuracy: 0.5972
+Epoch 41/70
+6/6 [==============================] - 5s 843ms/step - loss: 0.8096 - accuracy: 0.7174 - val_loss: 1.0931 - val_accuracy: 0.6417
+Epoch 42/70
+6/6 [==============================] - 5s 767ms/step - loss: 0.5202 - accuracy: 0.8234 - val_loss: 1.7072 - val_accuracy: 0.5889
+Epoch 43/70
+6/6 [==============================] - 5s 784ms/step - loss: 0.5357 - accuracy: 0.8071 - val_loss: 1.7627 - val_accuracy: 0.5859
+Epoch 44/70
+6/6 [==============================] - 6s 935ms/step - loss: 0.6686 - accuracy: 0.7772 - val_loss: 1.0115 - val_accuracy: 0.6333
+Epoch 45/70
+6/6 [==============================] - 6s 946ms/step - loss: 0.4230 - accuracy: 0.8698 - val_loss: 1.4687 - val_accuracy: 0.5667
+Epoch 46/70
+6/6 [==============================] - 5s 864ms/step - loss: 0.5163 - accuracy: 0.8409 - val_loss: 1.4166 - val_accuracy: 0.5528
+Epoch 47/70
+6/6 [==============================] - 5s 869ms/step - loss: 0.5240 - accuracy: 0.8307 - val_loss: 0.8835 - val_accuracy: 0.6583
+Epoch 48/70
+6/6 [==============================] - 5s 811ms/step - loss: 0.6763 - accuracy: 0.8288 - val_loss: 0.9843 - val_accuracy: 0.6500
+Epoch 49/70
+6/6 [==============================] - 5s 758ms/step - loss: 0.4958 - accuracy: 0.8478 - val_loss: 1.0874 - val_accuracy: 0.7528
+Epoch 50/70
+6/6 [==============================] - 5s 788ms/step - loss: 0.4849 - accuracy: 0.8568 - val_loss: 1.2099 - val_accuracy: 0.6641
+Epoch 51/70
+6/6 [==============================] - 6s 972ms/step - loss: 0.3697 - accuracy: 0.8668 - val_loss: 1.1971 - val_accuracy: 0.7111
+Epoch 52/70
+6/6 [==============================] - 6s 956ms/step - loss: 0.4972 - accuracy: 0.8097 - val_loss: 2.2187 - val_accuracy: 0.4611
+Epoch 53/70
+6/6 [==============================] - 5s 892ms/step - loss: 0.8085 - accuracy: 0.7745 - val_loss: 0.6567 - val_accuracy: 0.7500
+Epoch 54/70
+6/6 [==============================] - 5s 871ms/step - loss: 0.2839 - accuracy: 0.9062 - val_loss: 1.2421 - val_accuracy: 0.6444
+Epoch 55/70
+6/6 [==============================] - 5s 829ms/step - loss: 0.6198 - accuracy: 0.8125 - val_loss: 0.9199 - val_accuracy: 0.7194
+Epoch 56/70
+6/6 [==============================] - 5s 757ms/step - loss: 0.2998 - accuracy: 0.8995 - val_loss: 1.2607 - val_accuracy: 0.7000
+Epoch 57/70
+6/6 [==============================] - 5s 785ms/step - loss: 0.4785 - accuracy: 0.8397 - val_loss: 1.3103 - val_accuracy: 0.6432
+Epoch 58/70
+6/6 [==============================] - 6s 935ms/step - loss: 0.1881 - accuracy: 0.9429 - val_loss: 1.2788 - val_accuracy: 0.6444
+Epoch 59/70
+6/6 [==============================] - 5s 910ms/step - loss: 0.6420 - accuracy: 0.7880 - val_loss: 0.9270 - val_accuracy: 0.7306
+Epoch 60/70
+6/6 [==============================] - 5s 910ms/step - loss: 0.2710 - accuracy: 0.9089 - val_loss: 1.1232 - val_accuracy: 0.6167
+Epoch 61/70
+6/6 [==============================] - 5s 817ms/step - loss: 0.5368 - accuracy: 0.8324 - val_loss: 0.8705 - val_accuracy: 0.6722
+Epoch 62/70
+6/6 [==============================] - 5s 824ms/step - loss: 0.2554 - accuracy: 0.9089 - val_loss: 1.0347 - val_accuracy: 0.6833
+Epoch 63/70
+6/6 [==============================] - 5s 758ms/step - loss: 0.2511 - accuracy: 0.9130 - val_loss: 1.2589 - val_accuracy: 0.6194
+Epoch 64/70
+6/6 [==============================] - 5s 784ms/step - loss: 0.4152 - accuracy: 0.8696 - val_loss: 1.5426 - val_accuracy: 0.6120
+Epoch 65/70
+6/6 [==============================] - 6s 960ms/step - loss: 0.3882 - accuracy: 0.8614 - val_loss: 0.8489 - val_accuracy: 0.6944
+Epoch 66/70
+6/6 [==============================] - 6s 919ms/step - loss: 0.1795 - accuracy: 0.9511 - val_loss: 1.8606 - val_accuracy: 0.5778
+Epoch 67/70
+6/6 [==============================] - 5s 902ms/step - loss: 0.5188 - accuracy: 0.8411 - val_loss: 1.1124 - val_accuracy: 0.6500
+Epoch 68/70
+6/6 [==============================] - 5s 832ms/step - loss: 0.2765 - accuracy: 0.9091 - val_loss: 1.9056 - val_accuracy: 0.6333
+Epoch 69/70
+6/6 [==============================] - 5s 851ms/step - loss: 0.2172 - accuracy: 0.9245 - val_loss: 1.1417 - val_accuracy: 0.7556
+Epoch 70/70
+6/6 [==============================] - 5s 760ms/step - loss: 0.2964 - accuracy: 0.9103 - val_loss: 0.9496 - val_accuracy: 0.5833
+Validation loss:  2.0794384479522705
+Validation acc:   0.5755208134651184
