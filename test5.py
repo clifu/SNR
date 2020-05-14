@@ -22,7 +22,6 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 from keras.optimizers import Adam
 
-
 batch_size = 32768
 target_size = (224, 224)
 
@@ -85,6 +84,7 @@ classificators = [
     svm.SVC(kernel='rbf')]
 classifactors_names = ['linear', 'quadratic', 'rbf']
 indexxxxxx = 0
+
 for clf in classificators:
     print(classifactors_names[indexxxxxx])
     abc = []

@@ -1,3 +1,8 @@
+from vis.visualization import visualize_cam, overlay
+from vis.utils import utils
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+from keras import activations
 from keras.preprocessing.image import load_img
 from keras.models import load_model
 from keras.preprocessing.image import img_to_array
@@ -9,7 +14,9 @@ import keras.utils as ku
 import os
 import numpy as np
 import json
+from PIL import Image
 from keras import layers
+import keras
 from IPython.display import display
 from sklearn import svm
 from keras.applications.vgg16 import preprocess_input
@@ -19,10 +26,16 @@ from sklearn.metrics import classification_report, accuracy_score
 import operator
 from sklearn.model_selection import train_test_split
 import pandas as pd
+from keras import backend as k
+import cv2
+import matplotlib.pyplot as plt
+from matplotlib.pyplot import imshow
+import keract
 
-batch_size = 256
-target_size = (256, 256)
+batch_size = 1
+target_size = (224, 224)
 
+k.clear_session()
 model = load_model('C:/Users/Clifu/Desktop/SNR/SNR/learned_vgg16.h5')
 model.save_weights('wagi.h5')
 config = model.get_config()
@@ -36,7 +49,7 @@ test_dir = current_dir + r"\test"
 
 train_datagen = ImageDataGenerator(
     preprocessing_function=preprocess_function,
-    rescale=1. / 255,
+    rescale=1. / 223,
     rotation_range=40,
     width_shift_range=0.2,
     height_shift_range=0.2,
@@ -54,7 +67,7 @@ train_generator = train_datagen.flow_from_directory(
 
 test_datagen = ImageDataGenerator(
     preprocessing_function=preprocess_function,
-    rescale=1. / 255)
+    rescale=1. / 223)
 test_generator = test_datagen.flow_from_directory(
     test_dir,
     target_size=target_size,
@@ -62,11 +75,16 @@ test_generator = test_datagen.flow_from_directory(
     class_mode='categorical'
 )
 
-x, y = train_generator.next()
+x, y = test_generator.next()
 feature = model.predict(x, verbose=1)
 
-X_train, X_test, y_train, y_test = train_test_split(
-    feature, y)
+test_model = model.layers[0]
+test_model.compile(loss='categorical_crossentropy',
+                   optimizer=keras.optimizers.RMSprop(),
+                   metrics=['accuracy'])
+activations = keract.get_activations(
+    test_model, x, auto_compile=True)
+keract.display_activations(activations, save=False)
 
 classificators = [
     svm.SVC(kernel='linear'),
