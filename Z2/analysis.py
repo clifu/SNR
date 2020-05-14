@@ -43,5 +43,5 @@ batch_size = 15
 class_count, _, _, _, _, test_datagen, test_generator = get_data(batch_size)
 test_steps = len(test_generator.filenames) // batch_size
 
-draw_plots('adam_2c_')
-print_statistics(test_generator, test_steps, 'adam_2c_')
+draw_plots('adam_2c_batch_v1_')
+print_statistics(test_generator, test_steps, 'adam_2c_batch_v1_')

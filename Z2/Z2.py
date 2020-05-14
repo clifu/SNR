@@ -73,7 +73,7 @@ def experiment_batch_size():
 
 train_model(
     epoch_count=70,
-    batch_size=2,
-    file_suffix=f'_adam_2c_',
-    optimizer=optimizers.Adam(lr=0.000005)
+    batch_size=10,
+    file_suffix=f'_adam_2c_batch_v1_',
+    optimizer=optimizers.Adam(lr=0.00001)
 )
