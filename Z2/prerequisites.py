@@ -23,7 +23,7 @@ PREPROCESS_FUNCTION = vgg16.preprocess_input
 
 
 def get_data_dir():
-    return os.getcwd() + r"\..\data\stanford_car_dataset_by_classes"
+    return os.getcwd() + r"\..\stanford_car_dataset_by_classes"
 
 
 TRAIN_DIR = get_data_dir() + r"\train"
