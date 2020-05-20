@@ -1,39 +1,34 @@
-from keras.preprocessing.image import load_img
-from keras.models import load_model
-from keras.preprocessing.image import img_to_array
-from keras.applications.vgg16 import preprocess_input
-from keras.applications.vgg16 import decode_predictions
-from keras.applications.vgg16 import VGG16
-from keras.models import Sequential, Model
-import keras.utils as ku
-import os
-import numpy as np
 import json
-from keras import layers
-from IPython.display import display
-from sklearn import svm
-from keras.applications.vgg16 import preprocess_input
-import keras
-from keras.preprocessing.image import ImageDataGenerator
-from sklearn import metrics
-from sklearn.metrics import classification_report, accuracy_score
 import operator
-from sklearn.model_selection import train_test_split
-import pandas as pd
-from keras.optimizers import Adam
+import os
 
-batch_size = 32768
+import keras
+import keras.utils as ku
+import numpy as np
+import pandas as pd
+from IPython.display import display
+from keras import layers
+from keras.applications.vgg16 import (VGG16, decode_predictions,
+                                      preprocess_input)
+from keras.models import Model, Sequential, load_model
+from keras.optimizers import Adam
+from keras.preprocessing.image import (ImageDataGenerator, img_to_array,
+                                       load_img)
+from sklearn import metrics, svm
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.model_selection import train_test_split
+
+batch_size = 512
 target_size = (224, 224)
+preprocess_function = preprocess_input
+current_dir = os.getcwd() + r"\SNR\stanford_car_dataset_by_classes"
+train_dir = current_dir + r"\train"
+test_dir = current_dir + r"\test"
 
 model = load_model('C:/Users/Clifu/Desktop/SNR/SNR/learned_vgg16.h5')
 config = model.get_config()
 weights = model.get_weights()
 model.summary()
-
-preprocess_function = preprocess_input
-current_dir = os.getcwd() + r"\SNR\stanford_car_dataset_by_classes"
-train_dir = current_dir + r"\train"
-test_dir = current_dir + r"\test"
 
 train_datagen = ImageDataGenerator(
     preprocessing_function=preprocess_function,
@@ -63,6 +58,7 @@ test_generator = test_datagen.flow_from_directory(
     class_mode='categorical'
 )
 
+# Creating new base model using trained weights from
 base_model = VGG16(input_shape=(224, 224, 3))
 base_model.load_weights('wagi.h5', by_name=True)
 optimizer = keras.optimizers.RMSprop(lr=0.0001)
@@ -72,21 +68,25 @@ model.compile(loss='categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
 
+# Getting data
 x, y = train_generator.next()
+
+# Getting features for SVMs
 feature = model.predict(x, verbose=0)
 X_train, X_test, y_train, y_test = train_test_split(
     feature, y)
 
+# Creating classificators - SVMs
 classificators = [
     svm.SVC(kernel='linear'),
     svm.SVC(kernel='poly',
             degree=2),
     svm.SVC(kernel='rbf')]
 classifactors_names = ['linear', 'quadratic', 'rbf']
-indexxxxxx = 0
+idx = 0
 
 for clf in classificators:
-    print(classifactors_names[indexxxxxx])
+    print(classifactors_names[idx])
     abc = []
 
     for a in y_train:
@@ -106,5 +106,5 @@ for clf in classificators:
     print(report)
 
     acc = accuracy_score(abc, y_pred)
-    print('Accuracy for ' + classifactors_names[indexxxxxx] + ' : ' + str(acc))
-    indexxxxxx = indexxxxxx + 1
+    print('Accuracy for ' + classifactors_names[idx] + ' : ' + str(acc))
+    idx = idx + 1

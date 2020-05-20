@@ -1,12 +1,12 @@
-import keras
 import os
+
+import keras
 import matplotlib.pyplot as plt
 import numpy as np
-from keras.preprocessing.image import ImageDataGenerator
-from keras import layers
-from keras import models
-from keras.applications import VGG16, Xception, InceptionV3
+from keras import layers, models
+from keras.applications import VGG16, InceptionV3, Xception
 from keras.applications.vgg16 import preprocess_input
+from keras.preprocessing.image import ImageDataGenerator
 
 input_shape = (224, 224, 3)
 target_size = (224, 224)
@@ -69,13 +69,10 @@ def get_preapared_vgg16_model(_input_shape, _num_classes):
     _model = models.Sequential()
     _model.add(_conv_base)
 
-    # add a global spatial average pooling layer
+    # create classification layers
     _model.add(layers.Flatten(name='flatten'))
-
-    # let's add a fully-connected layer
     _model.add(layers.Dense(4096, activation='relu'))
     _model.add(layers.Dense(4096, activation='relu'))
-    # and a logistic layer
     _model.add(layers.Dense(_num_classes, activation='softmax'))
 
     print_model_info(_conv_base, _model)
