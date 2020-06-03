@@ -122,8 +122,7 @@ def get_data(batch_size):
         TRAIN_DIR,
         target_size=TARGET_SIZE,
         batch_size=batch_size,
-        class_mode='categorical',
-        shuffle=False
+        class_mode='categorical'
     )
 
     class_count = train_generator.num_classes
@@ -136,8 +135,7 @@ def get_data(batch_size):
         VAL_DIR,
         target_size=TARGET_SIZE,
         batch_size=batch_size,
-        class_mode='categorical',
-        shuffle=False
+        class_mode='categorical'
     )
 
     test_datagen = ImageDataGenerator(
